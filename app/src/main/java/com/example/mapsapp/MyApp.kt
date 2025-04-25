@@ -1,6 +1,7 @@
 package com.example.mapsapp
 
 import android.app.Application
+import com.example.mapsapp.data.MySupabaseClient
 
 class MyApp: Application() {
     companion object {
@@ -8,9 +9,9 @@ class MyApp: Application() {
     }
     override fun onCreate() {
         super.onCreate()
-        database = MySupabaseClient(
+        /*database = MySupabaseClient(
             supabaseUrl = "YOUR_URL",
             supabaseKey = "YOUR_KEY"
-        )
+        )*/
     }
 }
