@@ -10,6 +10,11 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
+    plugins {
+        id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1"
+        id("com.android.application") version "8.3.0"
+        id("org.jetbrains.kotlin.android") version "1.9.0"
+    }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -18,13 +23,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-buildscript {
-    dependencies {
-        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
-    }
-}
-
 
 rootProject.name = "Maps App"
 include(":app")
- 
