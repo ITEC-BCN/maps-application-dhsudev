@@ -5,64 +5,75 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.example.mapsapp.ui.navigation.Destinations.*
 import com.example.mapsapp.ui.screens.auth.LogInScreen
 import com.example.mapsapp.ui.screens.auth.RegisterScreen
 import com.example.mapsapp.ui.screens.main.MapScreen
 import com.example.mapsapp.ui.screens.main.markers.MarkerListScreen
+import com.example.mapsapp.ui.screens.main.markers.DetailMarkerScreen
+import com.example.mapsapp.ui.screens.main.markers.CreateMarkerScreen
 import com.example.mapsapp.ui.screens.permissions.PermissionScreen
-import com.example.mapsapp.utils.LatLngSerializer
-import com.google.android.gms.maps.model.LatLng
 
 @Composable
 fun NavWrapper(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = PermissionScreen::class) {
-        // REQUEST PERMISSIONS
-        composable<Destinations.PermissionScreen> {
+    NavHost(navController = navController, startDestination = Destination.PermissionScreen::class) {
+
+        composable<Destination.PermissionScreen> {
             PermissionScreen(onPermissionGranted = {
-                navController.navigate(LogInScreen)
+                navController.navigate(Destination.LogInScreen)
             })
         }
 
-        // AUTH
-        composable<LogInScreen> {
-            LogInScreen(onLoginSuccess = {
-                navController.navigate(MapScreen)
-            }, onRegisterClick = {
-                navController.navigate(RegisterScreen)
-            })
+        composable<Destination.LogInScreen> {
+            LogInScreen(
+                onLoginSuccess = {
+                    navController.navigate(Destination.MapScreen)
+                },
+                onRegisterClick = {
+                    navController.navigate(Destination.RegisterScreen)
+                }
+            )
         }
 
-        composable<RegisterScreen> {
-            RegisterScreen(onRegisterSuccess = {
-                navController.navigate(MapScreen)
-            }, onLoginClick = {
-                navController.navigate(LogInScreen)
-            })
+        composable<Destination.RegisterScreen> {
+            RegisterScreen(
+                onRegisterSuccess = {
+                    navController.navigate(Destination.MapScreen)
+                },
+                onLoginClick = {
+                    navController.navigate(Destination.LogInScreen)
+                }
+            )
         }
 
-        // MAIN APP
-        composable<MapScreen> {
-            MapScreen(onLongClick = { latLng ->
-                navController.navigate(CreateMarkerScreen(latLng)) // Create Marker when longClick
-            })
+
+        composable<Destination.MapScreen> {
+            MapScreen(
+                onLongClick = { latLng ->
+                    navController.navigate(Destination.CreateMarkerScreen(latLng))
+                }
+            )
         }
-        composable<MarkerListScreen> {
-            MarkerListScreen(navigateToDetail = { markerId ->
-                navController.navigate(DetailMarkerScreen(markerId) {
-                    navController.popBackStack()
-                })
-            })
+
+        composable<Destination.MarkerListScreen> {
+            MarkerListScreen(
+                navigateToDetail = { markerId ->
+                    navController.navigate(Destination.DetailMarkerScreen(markerId))
+                }
+            )
         }
-        composable<DetailMarkerScreen> { backStackEntry ->
-            val screenArgs = backStackEntry.toRoute<DetailMarkerScreen>()
+
+
+        composable<Destination.DetailMarkerScreen> {
+            val args = it.toRoute<Destination.DetailMarkerScreen>()
             DetailMarkerScreen(
-                markerId = screenArgs.markerId,
-                navigateBack = { navController.popBackStack() })
+                markerId = args.markerId,
+                navigateBack = { navController.popBackStack() }
+            )
         }
-        composable<CreateMarkerScreen> { backStackEntry ->
-            val screenArgs = backStackEntry.toRoute<CreateMarkerScreen>()
-            CreateMarkerScreen(latLng = screenArgs.latLng)
+
+        composable<Destination.CreateMarkerScreen> {
+            val args = it.toRoute<Destination.CreateMarkerScreen>()
+            CreateMarkerScreen(latLng = args.latLng)
         }
     }
 }

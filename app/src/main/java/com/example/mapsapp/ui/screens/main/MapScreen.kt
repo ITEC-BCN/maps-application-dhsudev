@@ -13,7 +13,7 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-fun MapScreen(onLongClick: (LatLng) -> Unit) {
+fun MapScreen(onLongClick: (String) -> Unit) {
     Column(Modifier.fillMaxSize()) {
         Text("This is the Map Screen")
 
@@ -25,7 +25,7 @@ fun MapScreen(onLongClick: (LatLng) -> Unit) {
             Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,
             onMapClick = {  latLng ->
-                onLongClick(latLng)
+                onLongClick(latLng.toString())
             }
         )
     }

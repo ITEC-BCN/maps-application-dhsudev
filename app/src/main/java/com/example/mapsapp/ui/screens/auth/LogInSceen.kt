@@ -13,7 +13,7 @@ import androidx.compose.material3.Text
 fun LogInScreen(onRegisterClick: () -> Unit, onLoginSuccess: () -> Unit) {
     Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally){
         Text("This is the Login Screen")
-        Button(onClick = onRegisterClick) {Text("Navigate to Register")}
-        Button(onClick = onLoginSuccess) {Text("Navigate to Map")}
+        Button(onClick = onRegisterClick ) {Text("Navigate to Register")}
+        Button(onClick = onLoginSuccess ){Text("Navigate to Map")}
     }
 }

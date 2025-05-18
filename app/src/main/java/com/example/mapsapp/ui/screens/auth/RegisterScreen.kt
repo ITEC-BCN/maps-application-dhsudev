@@ -9,10 +9,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun RegisterScreen(onLoginClick: () -> Unit, onRegisterSuccess: () -> Unit) {
-    Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally){
+fun RegisterScreen(
+    onLoginClick: () -> Unit,
+    onRegisterSuccess: () -> Unit
+) {
+    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text("This is the Register Screen")
-        Button(onClick = onLoginClick) {Text("Navigate to LogIn")}
-        Button(onClick = onRegisterSuccess) {Text("Navigate to Map")}
+        Button(onClick = onLoginClick) {
+            Text("Navigate to LogIn")
+        }
+        Button(onClick = onRegisterSuccess) {
+            Text("Navigate to Map")
+        }
     }
 }

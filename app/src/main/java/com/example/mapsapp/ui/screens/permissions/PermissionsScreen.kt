@@ -62,13 +62,14 @@ fun PermissionScreen(onPermissionGranted: () -> Unit) {
         }
     }
 
-
+    // Show status of each permission
     Column(modifier = Modifier.fillMaxSize(),horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
         Text("This apps requieres some permissions, accept them please", fontSize = 30.sp, fontWeight = FontWeight.Bold)
-        Text("Estado de los permisos:", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Text("Permission status:", fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(16.dp))
         permissions.forEach { permission ->
+            // Status of each permission
             val status = permissionsStatus[permission]
             val label = when (status) {
                 null -> "Requesting..."
@@ -80,15 +81,17 @@ fun PermissionScreen(onPermissionGranted: () -> Unit) {
             Text("$permissionName: $label")
         }
         Spacer(modifier = Modifier.height(16.dp))
+        // We have all permissions, show main screen
         if (permissions.all {permissionsStatus[it] == PermissionStatus.Granted}) {
-            // tenemos todos los permisos ejecutar app
             Button(onClick = onPermissionGranted) { Text("Go to app")}
         }
+        // Some permissions are not granted, show a button to request them again
         if (permissions.any {permissionsStatus[it] == PermissionStatus.Denied}) {
             Button(onClick = {launcher.launch(permissions.toTypedArray())}) {
                 Text("Request permissions again")
             }
         }
+        // Some permissions are permanently denied, show a button to open the app settings
         if (permissions.any {permissionsStatus[it] == PermissionStatus.PermanentlyDenied}) {
             Spacer(modifier = Modifier.height(8.dp))
             Button(onClick = {

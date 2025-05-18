@@ -7,12 +7,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.mapsapp.ui.navigation.Destinations
 
 @Composable
-fun DetailMarkerScreen(markerId: String){
+fun DetailMarkerScreen(
+    markerId: String,
+    navigateBack: () -> Unit
+){
     Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally){
         Text("This is the Detail Marker Screen")
         Text("Parameters received, id: $markerId")
+        Button(onClick = { navigateBack() }) { Text("Go back to list") }
     }
 }
