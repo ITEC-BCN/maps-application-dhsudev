@@ -42,7 +42,7 @@ class MySupabaseClient() {
             set("mark", mark)
         }) { filter { eq("id", id) } }
     }
-    suspend fun deleteMarker(id: String){
+    suspend fun deleteMarker(id: Int){
         supabase.from("Marker").delete{ filter { eq("id", id) } }
     }
 
@@ -55,7 +55,8 @@ class MySupabaseClient() {
             }
             return AuthState.Authenticated
         } catch (e: Exception) {
-            return AuthState.Error(e.localizedMessage)
+
+            return AuthState.Error(e.localizedMessage!!)
         }
     }
     suspend fun signInWithEmail(emailValue: String, passwordValue: String): AuthState {
@@ -66,7 +67,7 @@ class MySupabaseClient() {
             }
             return AuthState.Authenticated
         } catch (e: Exception) {
-            return AuthState.Error(e.localizedMessage)
+            return AuthState.Error(e.localizedMessage!!)
         }
     }
     fun retrieveCurrentSession(): UserSession?{
@@ -78,7 +79,7 @@ class MySupabaseClient() {
             supabase.auth.currentSessionOrNull()
             return AuthState.Authenticated
         } catch (e: Exception) {
-            return AuthState.Error(e.localizedMessage)
+            return AuthState.Error(e.localizedMessage!!)
         }
     }
 

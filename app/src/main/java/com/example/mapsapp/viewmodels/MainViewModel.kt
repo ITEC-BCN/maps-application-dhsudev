@@ -1,5 +1,6 @@
 package com.example.mapsapp.viewmodels
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
@@ -19,8 +20,11 @@ class MainViewModel : ViewModel() {
     val markerTitle = _markerTitle
     private val _markerMark = MutableLiveData<String>()
     val markerMark = _markerMark
+    private val _marker : MutableState<Marker?> = mutableStateOf(null)
+    val marker = _marker
+
     fun insertNewMarker(
-        markerId: String,
+        id: Int,
         owner: String = "none",
         long: Double,
         lat: Double,
@@ -28,7 +32,7 @@ class MainViewModel : ViewModel() {
         desc: String,
         image: String
     ) {
-        val newMarker = Marker(markerId, owner, long, lat, title, desc, image)
+        val newMarker = Marker(id, owner, long, lat, title, desc, image)
         CoroutineScope(Dispatchers.IO).launch {
             database.insertMarker(newMarker)
             getAllMarkers()
@@ -47,10 +51,16 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun deleteMarker(id: String){
+    fun deleteMarker(id: Int){
         CoroutineScope(Dispatchers.IO).launch {
             database.deleteMarker(id)
             getAllMarkers()
+        }
+    }
+
+    fun getMarker(id: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            _marker.value = database.getMarker(id)
         }
     }
 

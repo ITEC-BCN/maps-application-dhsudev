@@ -30,7 +30,7 @@ fun MarkerListScreen(navigateToDetail : (String) -> Unit) {
 
     val markersList by myViewModel.markersList.observeAsState(emptyList<Marker>())
 
-    //myViewModel.getAllMarkers()
+    myViewModel.getAllMarkers()
     LazyColumn(
         Modifier.fillMaxWidth().padding(top = 100.dp, start = 16.dp, end = 16.dp)
     ) {
@@ -38,7 +38,7 @@ fun MarkerListScreen(navigateToDetail : (String) -> Unit) {
             val dissmissState = rememberSwipeToDismissBoxState(
                 confirmValueChange = {
                     if (it == SwipeToDismissBoxValue.EndToStart) {
-                        myViewModel.deleteMarker(marker.markerId)
+                        myViewModel.deleteMarker(marker.id)
                         true
                     } else false
                 }
@@ -61,7 +61,7 @@ fun MarkerListScreen(navigateToDetail : (String) -> Unit) {
                     }
                 }
             ) {
-                MarkerItem(marker) { navigateToDetail(marker.markerId) }
+                MarkerItem(marker) { navigateToDetail(marker.id.toString()) }
             }
             Spacer(modifier = Modifier.height(12.dp))
         }
@@ -72,10 +72,9 @@ fun MarkerItem(marker: Marker, navigateToDetail: (String) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
             .background(Color.LightGray)
             .border(width = 2.dp, color = Color.DarkGray)
-            .clickable { navigateToDetail(marker.markerId) }
+            .clickable { navigateToDetail(marker.id.toString()) }
             .padding(12.dp)
     ) {
         Column(

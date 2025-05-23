@@ -47,7 +47,7 @@ fun MyDrawerMenu(goToLogIn: () -> Unit) {
                             selectedItemIndex = index
                             scope.launch { drawerState.close() }
                             if(drawerItem == DrawerItem.LOG_OUT){
-                                //TODO: logout
+                                //TODO: Log out
                                 goToLogIn()
                             }
                             navController.navigate(drawerItem.route)

@@ -12,6 +12,8 @@ import androidx.compose.ui.unit.dp
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
@@ -28,6 +30,12 @@ fun MapScreen(onLongClick: (String) -> Unit) {
             onMapLongClick = {  latLng ->
                 onLongClick(latLng.toString())
             }
-        )
+        ){
+            Marker(
+                state = MarkerState(position = itb),
+                title = "ITB",
+                snippet = "Marker at ITB"
+            )
+        }
     }
 }

@@ -19,9 +19,12 @@ import androidx.compose.runtime.getValue
 import com.example.mapsapp.viewmodels.AuthViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.TextButton
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun LogInScreen(onRegisterClick: () -> Unit, onLoginSuccess: () -> Unit) {
@@ -55,6 +58,7 @@ fun LogInScreen(onRegisterClick: () -> Unit, onLoginSuccess: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TextField(value = email, onValueChange = {vm.editEmail(it)})
+            Spacer(modifier = Modifier.padding(10.dp))
             TextField(value = password, onValueChange = {vm.editPassword(it)})
             Button(onClick = {vm.signIn()}) {
                 Text("Log in")
