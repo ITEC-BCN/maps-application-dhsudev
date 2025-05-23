@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 import kotlin.collections.set
 
 class MainViewModel : ViewModel() {
-    val database = MyApplication.database
+    private val database = MyApplication.database
     private val _markerTitle = MutableLiveData<String>()
     val markerTitle = _markerTitle
     private val _markerMark = MutableLiveData<String>()

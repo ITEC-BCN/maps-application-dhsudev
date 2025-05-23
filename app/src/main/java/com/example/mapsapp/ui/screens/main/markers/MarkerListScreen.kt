@@ -30,9 +30,9 @@ fun MarkerListScreen(navigateToDetail : (String) -> Unit) {
 
     val markersList by myViewModel.markersList.observeAsState(emptyList<Marker>())
 
-    myViewModel.getAllMarkers()
+    //myViewModel.getAllMarkers()
     LazyColumn(
-        Modifier.fillMaxWidth()
+        Modifier.fillMaxWidth().padding(top = 100.dp, start = 16.dp, end = 16.dp)
     ) {
         items(markersList) { marker ->
             val dissmissState = rememberSwipeToDismissBoxState(

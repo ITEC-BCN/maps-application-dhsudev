@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.example.mapsapp.ui.navigation.BeforeAuthNavWrapper
 import com.example.mapsapp.ui.navigation.NavWrapper
 import com.example.mapsapp.ui.screens.main.MyDrawerMenu
 import com.example.mapsapp.ui.screens.permissions.PermissionScreen
@@ -17,8 +18,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MapsAppTheme {
-                MyDrawerMenu()
-            // TODO: modify navigation to use internal wrapper so only drawer is visible when log in
+                val navController = rememberNavController()
+                BeforeAuthNavWrapper(navController)
             }
         }
     }

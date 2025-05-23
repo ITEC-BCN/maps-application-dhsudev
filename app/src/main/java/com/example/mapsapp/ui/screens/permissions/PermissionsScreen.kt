@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,13 +35,13 @@ import com.example.mapsapp.viewmodels.PermissionViewModel
 @Composable
 fun PermissionScreen(onPermissionGranted: () -> Unit) {
     val activity = LocalContext.current as Activity
-    val viewModel = viewModel<PermissionViewModel>()
+    val vm = viewModel<PermissionViewModel>()
     val permissions = listOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.CAMERA,
         Manifest.permission.RECORD_AUDIO
     )
-    val permissionsStatus = viewModel.permissionsStatus.value
+    val permissionsStatus = vm.permissionsStatus.value
     var alreadyRequested by remember { mutableStateOf(false) }
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
@@ -52,7 +53,7 @@ fun PermissionScreen(onPermissionGranted: () -> Unit) {
                 ActivityCompat.shouldShowRequestPermissionRationale(activity!!, permission) -> PermissionStatus.Denied
                 else -> PermissionStatus.PermanentlyDenied
             }
-            viewModel.updatePermissionStatus(permission, status)
+            vm.updatePermissionStatus(permission, status)
         }
     }
     LaunchedEffect(Unit) {
@@ -63,8 +64,10 @@ fun PermissionScreen(onPermissionGranted: () -> Unit) {
     }
 
     // Show status of each permission
-    Column(modifier = Modifier.fillMaxSize(),horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center) {
+    Column(modifier = Modifier.fillMaxSize().padding(top = 100.dp, start = 16.dp, end = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
         Text("This apps requieres some permissions, accept them please", fontSize = 30.sp, fontWeight = FontWeight.Bold)
         Text("Permission status:", fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(16.dp))
@@ -81,6 +84,7 @@ fun PermissionScreen(onPermissionGranted: () -> Unit) {
             Text("$permissionName: $label")
         }
         Spacer(modifier = Modifier.height(16.dp))
+
         // We have all permissions, show main screen
         if (permissions.all {permissionsStatus[it] == PermissionStatus.Granted}) {
             Button(onClick = onPermissionGranted) { Text("Go to app")}
